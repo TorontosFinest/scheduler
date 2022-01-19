@@ -1,8 +1,10 @@
 import React from "react";
 import "./InterviewerList.scss";
 import InterviewerListItem from "components/InterviewerListItem";
+import Appointment from "components/Appointment";
 
 export default function InterviewerList(props) {
+  const { onChange, value } = props;
   const interviewers = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem

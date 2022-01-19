@@ -8,6 +8,7 @@ import "index.scss";
 import DayList from "components/DayList";
 
 import InterviewerList from "components/InterviewerList";
+import Appointment from "components/Appointment";
 
 import InterviewerListItem from "components/InterviewerListItem";
 
@@ -127,3 +128,10 @@ storiesOf("InterviewerList", module)
       onChange={action("setInterviewer")}
     />
   ));
+
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }],
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with time", () => <Appointment time="12pm" />);
