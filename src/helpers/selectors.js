@@ -11,3 +11,14 @@ export default function getAppointmentsForDay(state, day) {
   }
   return result;
 }
+
+export function getInterview(state, interview) {
+  const object = {};
+  if (!interview) {
+    return null;
+  } else {
+    object["student"] = interview.student;
+    object["interviewer"] = state.interviewers[interview.interviewer];
+  }
+  return object;
+}

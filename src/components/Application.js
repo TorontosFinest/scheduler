@@ -12,28 +12,33 @@ export default function Application(props) {
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
+    interviewers: {},
   });
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const setDay = (day) => setState({ ...state, day });
 
   useEffect(() => {
-    Promise.all([axios.get("/api/days"), axios.get("/api/appointments")]).then(
-      (all) => {
-        const [first, second] = all;
+    Promise.all([
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
+    ]).then((all) => {
+      const [first, second, third] = all;
 
-        console.log(first, second);
-        console.log("DAYS AND APPTS", {
-          days: first.data,
-          appointments: second.data,
-        });
-        setState((prev) => ({
-          ...prev,
-          days: first.data,
-          appointments: second.data,
-        }));
-      }
-    );
+      console.log(first, second, third);
+      console.log("DAYS AND APPTS AND INTERVIEWERS", {
+        days: first.data,
+        appointments: second.data,
+        interviewers: third.data,
+      });
+      setState((prev) => ({
+        ...prev,
+        days: first.data,
+        appointments: second.data,
+        interviewers: third.data,
+      }));
+    });
   }, []);
 
   return (
