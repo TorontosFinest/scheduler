@@ -12,7 +12,7 @@ export default function getAppointmentsForDay(state, day) {
   return result;
 }
 
-export function getInterview(state, interview) {
+function getInterview(state, interview) {
   const object = {};
   if (!interview) {
     return null;
@@ -22,3 +22,18 @@ export function getInterview(state, interview) {
   }
   return object;
 }
+
+function getInterviewersForDay(state, day) {
+  var result = [];
+  for (const key of state.days) {
+    if (key.name === day) {
+      for (const key2 of key.interviewers) {
+        if (state.interviewers[key2]) {
+          result.push(state.interviewers[key2]);
+        }
+      }
+    }
+  }
+  return result;
+}
+export { getInterviewersForDay, getInterview };
