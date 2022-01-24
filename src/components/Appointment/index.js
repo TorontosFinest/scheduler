@@ -5,6 +5,7 @@ import Show from "./Show";
 import Form from "./Form";
 import Empty from "./Empty";
 import Status from "./Status";
+import Error from "./Error";
 import Confirm from "./Confirm";
 import "./styles.scss";
 import useVisualMode from "../../hooks/useVisualMode";
@@ -16,12 +17,18 @@ export default function Appointment(props) {
       interviewer,
     };
     transition(SAVING);
-    props.bookInterview(props.id, interview).then(() => transition(SHOW));
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVING, true));
   }
 
   function deleteAppt() {
-    transition(DELETE);
-    props.cancelInterview(props.id).then(() => transition(EMPTY));
+    transition(DELETE, true);
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETING, true));
   }
 
   function confirmCancel() {
@@ -37,6 +44,8 @@ export default function Appointment(props) {
   const DELETE = "DELETE";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVING = "ERROR_SAVING";
+  const ERROR_DELETING = "ERROR_DELETING";
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -78,6 +87,18 @@ export default function Appointment(props) {
         />
       )}
       {mode === DELETE && <Status message="DELETING..." />}
+      {mode === ERROR_DELETING && (
+        <Error
+          message="Something went wrong when trying to delete."
+          onClose={() => back()}
+        />
+      )}
+      {mode === ERROR_SAVING && (
+        <Error
+          message="Something went wrong when trying to save."
+          onClose={() => back()}
+        />
+      )}
     </article>
   );
 }
