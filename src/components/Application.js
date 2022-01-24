@@ -6,9 +6,32 @@ import Appointment from "components/Appointment";
 import axios from "axios";
 import getAppointmentsForDay, {
   getInterviewersForDay,
+  getInterview,
 } from "../helpers/selectors";
 
 export default function Application(props) {
+  function bookInterview(id, interview) {
+    console.log("bookInterview info: ", id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    return axios
+      .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then((result) => {
+        console.log("PUT DATA IS ", result);
+        setState({
+          ...state,
+          appointments,
+        });
+      });
+  }
+
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -63,13 +86,19 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {dailyAppointments.map((appointment) => (
-          <Appointment
-            key={appointment.id}
-            interviewers={dailyInterviewers}
-            {...appointment}
-          />
-        ))}
+        {dailyAppointments.map((appointment) => {
+          const interview = getInterview(state, appointment.interview);
+          console.log(" ur inteview is", interview);
+          return (
+            <Appointment
+              {...appointment}
+              interview={interview}
+              key={appointment.id}
+              interviewers={dailyInterviewers}
+              bookInterview={bookInterview}
+            />
+          );
+        })}
       </section>
     </main>
   );
