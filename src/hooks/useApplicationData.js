@@ -24,7 +24,6 @@ export default function useApplicationData() {
     const currentDay = state.days.find((day) => day.appointments.includes(id));
     const newDay = { ...currentDay, spots: currentDay.spots - 1 };
     // console.log("newday:", newDay);
-    const findDay = state.days.find((day) => id === day.appointments.id);
     // console.log("found day is", findDay);
     // console.log("days are", state.days);
     const newDays = state.days.map((day) => {
@@ -56,7 +55,6 @@ export default function useApplicationData() {
     const currentDay = state.days.find((day) => day.appointments.includes(id));
     const newDay = { ...currentDay, spots: currentDay.spots + 1 };
     // console.log("newday:", newDay);
-    const findDay = state.days.find((day) => id === day.appointments.id);
     // console.log("found day is", findDay);
     // console.log("days are", state.days);
     const newDays = state.days.map((day) => {
