@@ -36,7 +36,6 @@ export default function Application(props) {
       <section className="schedule">
         {dailyAppointments.map((appointment) => {
           const interview = getInterview(state, appointment.interview);
-          // console.log(" ur inteview is", interview);
           return (
             <Appointment
               {...appointment}
