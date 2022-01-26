@@ -15,6 +15,21 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
+  const parsedDailyAppoointments = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+    return (
+      <Appointment
+        {...appointment}
+        interview={interview}
+        key={appointment.id}
+        time={appointment.time}
+        interviewers={dailyInterviewers}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      />
+    );
+  });
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -34,19 +49,8 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {dailyAppointments.map((appointment) => {
-          const interview = getInterview(state, appointment.interview);
-          return (
-            <Appointment
-              {...appointment}
-              interview={interview}
-              key={appointment.id}
-              interviewers={dailyInterviewers}
-              bookInterview={bookInterview}
-              cancelInterview={cancelInterview}
-            />
-          );
-        })}
+        {parsedDailyAppoointments}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
