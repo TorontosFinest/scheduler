@@ -20,7 +20,15 @@ export default function useApplicationData() {
       [id]: appointment,
     };
     const currentDay = state.days.find((day) => day.appointments.includes(id));
-    const newDay = { ...currentDay, spots: currentDay.spots - 1 };
+    const bookedAppointments = Object.values(appointments).filter(
+      (appointment) => {
+        return (
+          currentDay.appointments.includes(appointment.id) &&
+          appointment.interview
+        );
+      }
+    );
+    const newDay = { ...currentDay, spots: 5 - bookedAppointments.length };
 
     const newDays = state.days.map((day) => {
       return day.name === state.day ? newDay : day;
