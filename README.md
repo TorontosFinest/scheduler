@@ -20,15 +20,15 @@ List of dependencies:
 
 ### Add Appointment
 
-![](https://gyazo.com/57fb4f85aa5dd21288445f98a8a3c5c5)
+![](https://i.gyazo.com/57fb4f85aa5dd21288445f98a8a3c5c5.gif)
 
 ### Edit Appointment
 
-![](https://gyazo.com/231a01e6dda3e7e986726e36a7d0ff40)
+![](https://i.gyazo.com/231a01e6dda3e7e986726e36a7d0ff40.gif)
 
 #### Delete Appointment
 
-![](https://gyazo.com/0a21a3e6068b347cca1903e08979dd640)
+![](https://i.gyazo.com/0a21a3e6068b347cca1903e08979dd64.gif)
 
 ## Running Webpack Development Server
 
