@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import Header from "./Header";
 import Show from "./Show";
@@ -10,7 +10,22 @@ import Confirm from "./Confirm";
 import "./styles.scss";
 import useVisualMode from "../../hooks/useVisualMode";
 
+const EMPTY = "EMPTY";
+const SHOW = "SHOW";
+const CREATE = "CREATE";
+const SAVING = "SAVING";
+const DELETE = "DELETE";
+const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
+const ERROR_SAVING = "ERROR_SAVING";
+const ERROR_DELETING = "ERROR_DELETING";
+
 export default function Appointment(props) {
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
+
+  // when saving an edit, call book interview and set state.
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -22,7 +37,7 @@ export default function Appointment(props) {
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVING, true));
   }
-
+  // delete appointment function calls cancel interview function and updates state
   function deleteAppt() {
     transition(DELETE, true);
     props
@@ -37,18 +52,6 @@ export default function Appointment(props) {
   function edit() {
     transition(EDIT);
   }
-  const EMPTY = "EMPTY";
-  const SHOW = "SHOW";
-  const CREATE = "CREATE";
-  const SAVING = "SAVING";
-  const DELETE = "DELETE";
-  const CONFIRM = "CONFIRM";
-  const EDIT = "EDIT";
-  const ERROR_SAVING = "ERROR_SAVING";
-  const ERROR_DELETING = "ERROR_DELETING";
-  const { mode, transition, back } = useVisualMode(
-    props.interview ? SHOW : EMPTY
-  );
 
   return (
     <article className="appointment">
@@ -89,13 +92,13 @@ export default function Appointment(props) {
       {mode === ERROR_DELETING && (
         <Error
           message="Something went wrong when trying to delete."
-          onClose={() => back()}
+          onClose={back}
         />
       )}
       {mode === ERROR_SAVING && (
         <Error
           message="Something went wrong when trying to save."
-          onClose={() => back()}
+          onClose={back}
         />
       )}
     </article>

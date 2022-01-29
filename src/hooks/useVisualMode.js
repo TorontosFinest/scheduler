@@ -14,12 +14,13 @@ export default function useVisualMode(initial) {
     }
   };
 
+  // if history length less or = 1, theres no history. if length >1, set history to the second last mode.
   const back = () => {
     if (history.length > 1) {
-      history.pop();
-    }
-    if (history.length > 0) {
-      setMode(history.slice(-1)[0]);
+      setMode(history[history.length - 2]);
+      setHistory(history.slice(0, -1));
+    } else {
+      return;
     }
   };
 
