@@ -4,7 +4,8 @@ Interview Scheduler is a webapp created with react where you are able to schedul
 
 ## Setup
 
-Install dependencies with `npm install`.
+- Install dependencies with `npm install`.
+- Start up scheduler-api server so you can make requests to the api
 
 List of dependencies:
 
